@@ -685,12 +685,14 @@ filter(babynames, name == Sea)
 **Your corrected code:**
 ```{r fix-code-student, eval=FALSE}
 # Fixed code here:
-
+filter(babynames, name == "Sea")
 
 ```
 
 **Your explanation of what was wrong:**
+The first line of code they were using = instead of ==, hence got the error about named input.
 
+The second line of code, here Sea is unquoted, so R looks for an object/variable named Sea and therefore the you get the object 'Sea' not found error
 
 
 ## Problem 2: Most Popular Names  
@@ -699,10 +701,14 @@ Which name was the most popular for a single gender in a single year? Compare ar
 
 ```{r popular-names-student, eval=FALSE}
 # Your code to find highest proportion:
-
+babynames %>%
+  arrange(desc(n)) %>%
+  slice(1)
 
 # Your code to find highest count:
-
+babynames %>%
+  arrange(desc(prop)) %>%
+  slice(1)
 
 ```
 
@@ -721,7 +727,10 @@ Write a pipeline that will:
 
 ```{r girls-2017-student, eval=FALSE}
 # Your pipeline here:
-
+babynames %>%
+  filter(year == 2017, sex == "F") %>%
+  select(name, n) %>%
+  arrange(desc(n))
 
 ```
 
@@ -750,6 +759,9 @@ table4b  # Population
 - How would you describe what each row and column represents in each table?
 
 *Write your analysis here:*
+
+table 1 is tidy
+
 
 
 
@@ -804,10 +816,26 @@ cholesterol_data
 
 ```{r cholesterol-solution-student, eval=FALSE}
 # Task 1 - Convert to long format:
+cholesterol_long <- cholesterol_data %>%
+  pivot_longer(
+    cols = everything(),       # take both oat_bran and oat_bran_free
+    names_to = "diet",         # new column for group names
+    values_to = "cholesterol"  # new column for values
+  )
 
+cholesterol_long
 
 # Task 2 - Calculate summary statistics:
+cholesterol_summary <- cholesterol_long %>%
+  group_by(diet) %>%
+  summarise(
+    n = n(),
+    mean = mean(cholesterol),
+    sd = sd(cholesterol),
+    .groups = "drop"
+  )
 
+cholesterol_summary
 
 ```
 
@@ -817,7 +845,11 @@ cholesterol_data
 
 *Write your analysis here:*
 
+Oat bran group has a lower mean cholesterol (4.51) compared to the oat bran free group (4.79).
 
+Oat bran free: sd = 0.592, values are a bit more consistent (less variability).
+
+Oat bran: sd = 0.763, values are more spread out, meaning some individuals responded better (or worse) than others.
 
 ## Advanced Tidy Data Problems  
 
