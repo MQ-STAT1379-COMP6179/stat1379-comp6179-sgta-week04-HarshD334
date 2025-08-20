@@ -1,7 +1,7 @@
 ---
 title: "STAT1379/COMP6179: ST4DS"
 subtitle: "Week 4 SGTA: Student template"
-author: "Your Name Here"
+author: "Harsh"
 execute:
   echo: true
   eval: true
@@ -400,8 +400,9 @@ waldo::compare(weather_data, weather_check)
 - Why is it good practice to read the data back after saving?
 
 *Write your thoughts here:*
+my_weather_data.csv file was created
 
-
+Verification of the save, check data integrity, ensure reproducibility and early error detection
 
 ### Selecting and Modifying Values  
 
